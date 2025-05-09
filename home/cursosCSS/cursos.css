@@ -1,0 +1,16 @@
+.cursos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas iguais */
+    gap: 20px; /* espaço entre os cursos */
+    padding: 20px;
+    justify-content: center;
+}
+
+.curso {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
