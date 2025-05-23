@@ -121,20 +121,73 @@
         </div>
 
         <!-- Seção de vídeos -->
-        <div class="row">
-            <div class="col-12">
-                <div class="p-4 border rounded bg-light">
-                    <h4>Vídeos</h4>
-                    <p>Aqui você pode adicionar seus vídeos do curso.</p>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/rzLKns787Uk?si=Qhf-VUjleAHwMwWE"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                    </iframe>
+        <!-- Seção de vídeos com capítulos -->
+<div class="row">
+    <div class="col-12">
+        <div class="p-4 border rounded bg-light">
+            <h4>Vídeos</h4>
+            <p>Aqui você pode assistir aos vídeos organizados por capítulos.</p>
 
+            <div class="accordion" id="accordionVideos">
+                <!-- Capítulo 1 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="videoHeadingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#videoCollapseOne" aria-expanded="true" aria-controls="videoCollapseOne">
+                            Capítulo 1: Introdução
+                        </button>
+                    </h2>
+                    <div id="videoCollapseOne" class="accordion-collapse collapse show"
+                        aria-labelledby="videoHeadingOne" data-bs-parent="#accordionVideos">
+                        <div class="accordion-body">
+                            <iframe width="100%" height="315"
+                                src="https://www.youtube.com/embed/rzLKns787Uk"
+                                title="Vídeo Capítulo 1" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capítulo 2 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="videoHeadingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#videoCollapseTwo" aria-expanded="false" aria-controls="videoCollapseTwo">
+                            Capítulo 2
+                        </button>
+                    </h2>
+                    <div id="videoCollapseTwo" class="accordion-collapse collapse"
+                        aria-labelledby="videoHeadingTwo" data-bs-parent="#accordionVideos">
+                        <div class="accordion-body">
+                           ########
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capítulo 3 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="videoHeadingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#videoCollapseThree" aria-expanded="false"
+                            aria-controls="videoCollapseThree">
+                            Capítulo 3
+                        </button>
+                    </h2>
+                    <div id="videoCollapseThree" class="accordion-collapse collapse"
+                        aria-labelledby="videoHeadingThree" data-bs-parent="#accordionVideos">
+                        <div class="accordion-body">
+                            #########
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
+    </div>
+</div>
+
     </div>
 
     <script src="/home/script.js"></script>
