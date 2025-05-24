@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Criar Curso</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h2>Criar Novo Curso</h2>
+  <form id="cursoForm">
+    <label for="nome">Nome do Curso:</label><br>
+    <input type="text" id="nome" name="nome" required><br><br>
+
+    <label for="descricao">Descrição:</label><br>
+    <textarea id="descricao" name="descricao" required></textarea><br><br>
+
+    <label for="imagem">URL da Imagem:</label><br>
+    <input type="text" id="imagem" name="imagem" required><br><br>
+
+    <button type="submit">Salvar Curso</button>
+  </form>
+
+  <script>
+    document.getElementById('cursoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const descricao = document.getElementById('descricao').value;
+      const imagem = document.getElementById('imagem').value;
+
+      const res = await fetch('http://localhost:3000/api/cursos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, descricao, imagem })
+      });
+
+      if (res.ok) {
+        alert('Curso criado com sucesso!');
+        window.location.href = 'index.html';
+      } else {
+        alert('Erro ao criar curso');
+      }
+    });
+  </script>
+</body>
+</html>
