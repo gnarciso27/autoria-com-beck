@@ -45,12 +45,21 @@ app.post('/api/cursos', (req, res) => {
             if (err) return res.status(500).json({ erro: 'Erro ao salvar o curso' });
 
             // Copia modelo da página de curso
-            const templatePath = path.join(__dirname, 'template', 'curso.html');
+            const templateDir = path.join(__dirname, 'template');
+            const templateHtml = path.join(templateDir, 'curso.html');
+            const templateCss = path.join(templateDir, 'style.css');
+            const templateJs = path.join(templateDir, 'script.js');
+
             const newDir = path.join(__dirname, '..', 'Cursos', nome);
             const newHtml = path.join(newDir, 'index.html');
+            const newCss = path.join(newDir, 'style.css');
+            const newJs = path.join(newDir, 'script.js');
 
             fs.mkdirSync(newDir, { recursive: true });
-            fs.copyFileSync(templatePath, newHtml);
+            fs.copyFileSync(templateHtml, newHtml);
+            fs.copyFileSync(templateCss, newCss);
+            fs.copyFileSync(templateJs, newJs);
+
 
             res.status(201).json({ mensagem: 'Curso criado com sucesso!' });
         });

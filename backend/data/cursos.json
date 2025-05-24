@@ -16,5 +16,11 @@
     "descricao": "isaaquiii",
     "imagem": "https://th.bing.com/th/id/OIP.2HMrxFVnhzc1As7VQ6Eo7gHaIF?w=154&h=180&c=7&r=0&o=5&pid=1.7",
     "link": "/Cursos/fisica/index.html"
+  },
+  {
+    "nome": "eletronica analogica",
+    "descricao": "aaaaa",
+    "imagem": "https://th.bing.com/th/id/OIP.Fq8TYpaKN84EvgcXpA03OwHaHa?w=173&h=180&c=7&r=0&o=5&pid=1.7",
+    "link": "/Cursos/eletronica analogica/index.html"
   }
 ]
