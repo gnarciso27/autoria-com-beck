@@ -14,3 +14,12 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     text-align: center;
 }
+
+.formi{
+    margin-left: 300px;
+    margin-top: 50px;
+}
+.curso__img{
+    width: 20%;     /* ocupa 100% da largura do container */
+    height: auto;    /* ajusta a altura automaticamente */
+}
