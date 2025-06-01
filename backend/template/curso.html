@@ -50,46 +50,15 @@
                 <div class="border rounded bg-light section-box text-start">
                     <h4 class="text-center">Exercícios</h4>
 
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-center">Exercícios</h4>
+                        <button id="adicionarCapituloBtn" class="btn btn-primary btn-sm">Adicionar Capítulo</button>
+                    </div>
+
                     <div class="accordion" id="accordionExercicios">
-                        <!-- Capítulo 1 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Capítulo 1: Introdução
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                data-bs-parent="#accordionExercicios">
-                                <div class="accordion-body">
-                                    <ul>
-                                        <li>###############</li>
-                                        <li>###############</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Capítulo 2 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Capítulo 2:
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                data-bs-parent="#accordionExercicios">
-                                <div class="accordion-body">
-                                    <ul>
-                                        <li>###############</li>
-                                        <li>###############</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
 
-                        
+
                     </div>
 
                 </div>
@@ -104,69 +73,77 @@
         </div>
 
         <!-- Seção de vídeos com miniatura -->
-<div class="row">
-    <div class="col-12">
-        <div class="p-4 border rounded bg-light">
-            <h4>Vídeos</h4>
-            <p>Aqui você pode assistir aos vídeos organizados por capítulos.</p>
+        <div class="row">
+            <div class="col-12">
+                <div class="p-4 border rounded bg-light">
+                    <h4>Vídeos</h4>
+                    <p>Aqui você pode assistir aos vídeos organizados por capítulos.</p>
 
-            <div class="accordion" id="accordionVideos">
-                
-                <!-- Capítulo 1 -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="videoHeadingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#videoCollapseOne" aria-expanded="true" aria-controls="videoCollapseOne">
-                            Capítulo 1: Introdução
-                        </button>
-                    </h2>
-                    <div id="videoCollapseOne" class="accordion-collapse collapse show"
-                        aria-labelledby="videoHeadingOne" data-bs-parent="#accordionVideos">
-                        <div class="accordion-body text-start">
-                            <div class="video-wrapper" data-video-id="#">
-                                <div class="d-flex align-items-center gap-3">
-                                    <h5 class="video-title" style="cursor: pointer;">Video 1</h5>
-                                    <img src="https://img.youtube.com/vi/#/hqdefault.jpg" class="img-thumbnail video-thumbnail" style="max-width: 320px; cursor: pointer;">
-                                </div>
-                            </div>
-                            <div class="video-wrapper" data-video-id="##">
-                                <div class="d-flex align-items-center gap-3"> 
-                                    <h5 class="video-title" style="cursor: pointer;">Video 2</h5>
-                                    <img src="https://img.youtube.com/vi/##/hqdefault.jpg" class="img-thumbnail video-thumbnail" style="max-width: 320px; cursor: pointer;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <div class="accordion" id="accordionVideos">
 
-                <!-- Capítulo 2 -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="videoHeadingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#videoCollapseTwo" aria-expanded="false" aria-controls="videoCollapseTwo">
-                            Capítulo 2:
-                        </button>
-                    </h2>
-                    <div id="videoCollapseTwo" class="accordion-collapse collapse"
-                        aria-labelledby="videoHeadingTwo" data-bs-parent="#accordionVideos">
-                        <div class="accordion-body text-start">
-                            <div class="video-wrapper" data-video-id="###">
-                                <div class="d-flex align-items-center gap-3">
-                                    <h5 class="video-title" style="cursor: pointer;">Video 1</h5>
-                                    <img src="https://img.youtube.com/vi/###/hqdefault.jpg" class="img-thumbnail video-thumbnail" style="max-width: 320px; cursor: pointer;">
+                        <!-- Capítulo 1 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="videoHeadingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#videoCollapseOne" aria-expanded="true"
+                                    aria-controls="videoCollapseOne">
+                                    Capítulo 1: Introdução
+                                </button>
+                            </h2>
+                            <div id="videoCollapseOne" class="accordion-collapse collapse show"
+                                aria-labelledby="videoHeadingOne" data-bs-parent="#accordionVideos">
+                                <div class="accordion-body text-start">
+                                    <div class="video-wrapper" data-video-id="#">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <h5 class="video-title" style="cursor: pointer;">Video 1</h5>
+                                            <img src="https://img.youtube.com/vi/#/hqdefault.jpg"
+                                                class="img-thumbnail video-thumbnail"
+                                                style="max-width: 320px; cursor: pointer;">
+                                        </div>
+                                    </div>
+                                    <div class="video-wrapper" data-video-id="##">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <h5 class="video-title" style="cursor: pointer;">Video 2</h5>
+                                            <img src="https://img.youtube.com/vi/##/hqdefault.jpg"
+                                                class="img-thumbnail video-thumbnail"
+                                                style="max-width: 320px; cursor: pointer;">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Capítulo 2 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="videoHeadingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#videoCollapseTwo" aria-expanded="false"
+                                    aria-controls="videoCollapseTwo">
+                                    Capítulo 2:
+                                </button>
+                            </h2>
+                            <div id="videoCollapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="videoHeadingTwo" data-bs-parent="#accordionVideos">
+                                <div class="accordion-body text-start">
+                                    <div class="video-wrapper" data-video-id="###">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <h5 class="video-title" style="cursor: pointer;">Video 1</h5>
+                                            <img src="https://img.youtube.com/vi/###/hqdefault.jpg"
+                                                class="img-thumbnail video-thumbnail"
+                                                style="max-width: 320px; cursor: pointer;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
+
                 </div>
-
-                
-
             </div>
-
         </div>
-    </div>
-</div>
 
 
     </div>
@@ -179,7 +156,7 @@
             const videoId = wrapper.getAttribute('data-video-id');
             const title = wrapper.querySelector('.video-title');
             const thumbnail = wrapper.querySelector('.video-thumbnail');
-        
+
             const loadVideo = () => {
                 wrapper.innerHTML = `
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}?autoplay=1"
@@ -189,12 +166,71 @@
                     </iframe>
                 `;
             };
-        
+
             title.addEventListener('click', loadVideo);
             thumbnail.addEventListener('click', loadVideo);
         });
-        </script>
-        
+
+        document.getElementById('adicionarCapituloBtn').addEventListener('click', () => {
+            const titulo = prompt("Digite o nome do novo capítulo:");
+            if (!titulo) return;
+
+            const nomeCurso = window.location.pathname.split('/')[2]; // "/Cursos/NOME/index.html"
+
+            fetch(`http://localhost:3000/api/cursos/${nomeCurso}/adicionar-capitulo-exercicio`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.mensagem || "Capítulo criado!");
+                    location.reload(); // Recarrega a página para atualizar o accordion
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Erro ao criar capítulo");
+                });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const nomeCurso = window.location.pathname.split('/')[2]; // /Cursos/NOME/index.html
+
+            fetch(`http://localhost:3000/api/cursos/${nomeCurso}`)
+                .then(res => res.json())
+                .then(curso => {
+                    const accordion = document.getElementById('accordionExercicios');
+                    accordion.innerHTML = ''; // Limpa os capítulos estáticos
+
+                    curso.capitulosExercicios?.forEach((capitulo, index) => {
+                        const id = `collapseEx${index}`;
+                        const headerId = `headingEx${index}`;
+
+                        accordion.innerHTML += `
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="${headerId}">
+                            <button class="accordion-button ${index !== 0 ? 'collapsed' : ''}" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#${id}" aria-expanded="${index === 0}" aria-controls="${id}">
+                                ${capitulo.titulo}
+                            </button>
+                        </h2>
+                        <div id="${id}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" aria-labelledby="${headerId}" data-bs-parent="#accordionExercicios">
+                            <div class="accordion-body">
+                                <ul>
+                                    ${(capitulo.exercicios || []).map(e => `<li>${e}</li>`).join('') || '<li>Nenhum exercício</li>'}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    });
+                })
+                .catch(err => {
+                    console.error("Erro ao carregar capítulos:", err);
+                });
+        });
+
+    </script>
+
 
 </body>
 

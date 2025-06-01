@@ -69,3 +69,42 @@ app.post('/api/cursos', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+app.post('/api/cursos/:nome/adicionar-capitulo-exercicio', (req, res) => {
+    const { nome } = req.params;
+    const { titulo } = req.body;
+
+    fs.readFile(cursosPath, 'utf8', (err, data) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+
+        let cursos = JSON.parse(data || '[]');
+        const curso = cursos.find(c => c.nome === nome);
+
+        if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
+
+        if (!curso.capitulosExercicios) curso.capitulosExercicios = [];
+
+        curso.capitulosExercicios.push({
+            titulo,
+            exercicios: []
+        });
+
+        fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
+            if (err) return res.status(500).json({ erro: 'Erro ao salvar capítulo' });
+            res.json({ mensagem: 'Capítulo adicionado com sucesso' });
+        });
+    });
+});
+app.get('/api/cursos/:nome', (req, res) => {
+    const { nome } = req.params;
+
+    fs.readFile(cursosPath, 'utf8', (err, data) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+
+        const cursos = JSON.parse(data || '[]');
+        const curso = cursos.find(c => c.nome === nome);
+
+        if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
+
+        res.json(curso);
+    });
+});
