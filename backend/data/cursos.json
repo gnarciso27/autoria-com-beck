@@ -1,14 +1,3 @@
 [
-  {
-    "nome": "Como ser malhado",
-    "descricao": "Aprenda a ficar malhado no IF todinho",
-    "imagem": "https://cdn.suap.ifrn.edu.br/media/alunos/332367.TA1K0argNY6n.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=24I2DK2GsCsUIcxsjfkg%2F20250524%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250524T213923Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=52580fa177695e65773d0f04390cddcd41fd03a10bd38c66464b378812c5a071",
-    "link": "/Cursos/Como ser malhado/index.html"
-  },
-  {
-    "nome": "matematica basica",
-    "descricao": "Aprenda o basico da matematica",
-    "imagem": "https://th.bing.com/th?q=Matematica+Icon.png&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=pt-BR&cc=BR&setlang=pt-br&adlt=strict&t=1&mw=247",
-    "link": "/Cursos/matematica basica/index.html"
-  }
+ 
 ]
