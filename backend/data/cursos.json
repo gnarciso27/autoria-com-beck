@@ -1,3 +1,17 @@
 [
-  
+  {
+    "nome": "bostaa",
+    "descricao": "puta que pariiuu",
+    "imagem": "https://www.usinainfo.com.br/img/cms/fotos-categorias/simbolo-do-diodo.jpg",
+    "link": "/Cursos/bostaa/index.html",
+    "capitulosExercicios": [
+      {
+        "titulo": "merdaaa",
+        "exercicios": [
+          "/Cursos/bostaa/exercicios/0/1748819028987-lista01.pdf"
+          
+        ]
+      }
+    ]
+  }
 ]

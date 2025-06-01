@@ -7,6 +7,24 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3000;
+const multer = require('multer');
+
+// Configuração de onde os PDFs serão salvos
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const nomeCurso = req.params.nome;
+        const capituloIndex = req.params.capituloIndex;
+        const dir = path.join(__dirname, '..', 'Cursos', nomeCurso, 'exercicios', capituloIndex);
+        fs.mkdirSync(dir, { recursive: true });
+        cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
 
 app.use(cors());
 app.use(express.json());
@@ -130,6 +148,31 @@ app.post('/api/cursos/:nome/adicionar-capitulo-video', (req, res) => {
         fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
             if (err) return res.status(500).json({ erro: 'Erro ao salvar capítulo de vídeo' });
             res.json({ mensagem: 'Capítulo de vídeo adicionado com sucesso' });
+        });
+    });
+});
+app.post('/api/cursos/:nome/capitulo-exercicio/:capituloIndex/upload', upload.single('arquivo'), (req, res) => {
+    const { nome, capituloIndex } = req.params;
+    const file = req.file;
+
+    if (!file) return res.status(400).json({ erro: 'Nenhum arquivo enviado' });
+
+    fs.readFile(cursosPath, 'utf8', (err, data) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+
+        let cursos = JSON.parse(data || '[]');
+        const curso = cursos.find(c => c.nome === nome);
+        if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
+
+        const capitulo = curso.capitulosExercicios?.[capituloIndex];
+        if (!capitulo) return res.status(404).json({ erro: 'Capítulo não encontrado' });
+
+        const relativePath = `/Cursos/${nome}/exercicios/${capituloIndex}/${file.filename}`;
+        capitulo.exercicios.push(relativePath);
+
+        fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
+            if (err) return res.status(500).json({ erro: 'Erro ao salvar capítulo' });
+            res.json({ mensagem: 'Exercício enviado com sucesso', caminho: relativePath });
         });
     });
 });
