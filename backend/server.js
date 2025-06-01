@@ -108,3 +108,28 @@ app.get('/api/cursos/:nome', (req, res) => {
         res.json(curso);
     });
 });
+app.post('/api/cursos/:nome/adicionar-capitulo-video', (req, res) => {
+    const { nome } = req.params;
+    const { titulo } = req.body;
+
+    fs.readFile(cursosPath, 'utf8', (err, data) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+
+        let cursos = JSON.parse(data || '[]');
+        const curso = cursos.find(c => c.nome === nome);
+
+        if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
+
+        if (!curso.capitulosVideos) curso.capitulosVideos = [];
+
+        curso.capitulosVideos.push({
+            titulo,
+            videos: []
+        });
+
+        fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
+            if (err) return res.status(500).json({ erro: 'Erro ao salvar capítulo de vídeo' });
+            res.json({ mensagem: 'Capítulo de vídeo adicionado com sucesso' });
+        });
+    });
+});

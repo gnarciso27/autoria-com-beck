@@ -76,66 +76,16 @@
         <div class="row">
             <div class="col-12">
                 <div class="p-4 border rounded bg-light">
-                    <h4>Vídeos</h4>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-center">Vídeos</h4>
+                        <button id="adicionarCapituloVideoBtn" class="btn btn-primary btn-sm">Adicionar
+                            Capítulo</button>
+                    </div>
                     <p>Aqui você pode assistir aos vídeos organizados por capítulos.</p>
 
                     <div class="accordion" id="accordionVideos">
 
-                        <!-- Capítulo 1 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="videoHeadingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#videoCollapseOne" aria-expanded="true"
-                                    aria-controls="videoCollapseOne">
-                                    Capítulo 1: Introdução
-                                </button>
-                            </h2>
-                            <div id="videoCollapseOne" class="accordion-collapse collapse show"
-                                aria-labelledby="videoHeadingOne" data-bs-parent="#accordionVideos">
-                                <div class="accordion-body text-start">
-                                    <div class="video-wrapper" data-video-id="#">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <h5 class="video-title" style="cursor: pointer;">Video 1</h5>
-                                            <img src="https://img.youtube.com/vi/#/hqdefault.jpg"
-                                                class="img-thumbnail video-thumbnail"
-                                                style="max-width: 320px; cursor: pointer;">
-                                        </div>
-                                    </div>
-                                    <div class="video-wrapper" data-video-id="##">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <h5 class="video-title" style="cursor: pointer;">Video 2</h5>
-                                            <img src="https://img.youtube.com/vi/##/hqdefault.jpg"
-                                                class="img-thumbnail video-thumbnail"
-                                                style="max-width: 320px; cursor: pointer;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Capítulo 2 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="videoHeadingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#videoCollapseTwo" aria-expanded="false"
-                                    aria-controls="videoCollapseTwo">
-                                    Capítulo 2:
-                                </button>
-                            </h2>
-                            <div id="videoCollapseTwo" class="accordion-collapse collapse"
-                                aria-labelledby="videoHeadingTwo" data-bs-parent="#accordionVideos">
-                                <div class="accordion-body text-start">
-                                    <div class="video-wrapper" data-video-id="###">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <h5 class="video-title" style="cursor: pointer;">Video 1</h5>
-                                            <img src="https://img.youtube.com/vi/###/hqdefault.jpg"
-                                                class="img-thumbnail video-thumbnail"
-                                                style="max-width: 320px; cursor: pointer;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
 
@@ -192,6 +142,28 @@
                     alert("Erro ao criar capítulo");
                 });
         });
+        document.getElementById('adicionarCapituloVideoBtn').addEventListener('click', () => {
+            const titulo = prompt("Digite o nome do novo capítulo de vídeo:");
+            if (!titulo) return;
+
+            const nomeCurso = window.location.pathname.split('/')[2];
+
+            fetch(`http://localhost:3000/api/cursos/${nomeCurso}/adicionar-capitulo-video`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.mensagem || "Capítulo de vídeo criado!");
+                    location.reload();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Erro ao criar capítulo de vídeo");
+                });
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             const nomeCurso = window.location.pathname.split('/')[2]; // /Cursos/NOME/index.html
 
@@ -223,11 +195,37 @@
                     </div>
                 `;
                     });
+                    const accordionVideos = document.getElementById('accordionVideos');
+                    accordionVideos.innerHTML = '';
+        
+                    curso.capitulosVideos?.forEach((capitulo, index) => {
+                        const id = `collapseVid${index}`;
+                        const headerId = `headingVid${index}`;
+        
+                        accordionVideos.innerHTML += `
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="${headerId}">
+                        <button class="accordion-button ${index !== 0 ? 'collapsed' : ''}" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#${id}" aria-expanded="${index === 0}" aria-controls="${id}">
+                            ${capitulo.titulo}
+                        </button>
+                    </h2>
+                    <div id="${id}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" aria-labelledby="${headerId}" data-bs-parent="#accordionVideos">
+                        <div class="accordion-body">
+                            <ul>
+                                ${(capitulo.videos || []).map(v => `<li>${v}</li>`).join('') || '<li>Nenhum vídeo</li>'}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    });
+        
+                });
                 })
                 .catch(err => {
                     console.error("Erro ao carregar capítulos:", err);
                 });
-        });
 
     </script>
 
