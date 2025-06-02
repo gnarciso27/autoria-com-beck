@@ -1,3 +1,24 @@
 [
-  
+  {
+    "nome": "Análise de circuitos com diodos",
+    "descricao": "Vamos analisar!",
+    "imagem": "https://www.usinainfo.com.br/img/cms/fotos-categorias/simbolo-do-diodo.jpg",
+    "link": "/Cursos/Análise de circuitos com diodos/index.html",
+    "capitulosVideos": [
+      {
+        "titulo": "Capitulo 1",
+        "videos": [
+          "https://www.youtube.com/shorts/2WvmDyTZoN4"
+        ]
+      }
+    ],
+    "capitulosExercicios": [
+      {
+        "titulo": "Capítulo 1",
+        "exercicios": [
+          "/Cursos/Análise de circuitos com diodos/exercicios/0/1748825659824-lista01.pdf"
+        ]
+      }
+    ]
+  }
 ]
