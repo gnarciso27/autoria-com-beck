@@ -1,100 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <link rel="stylesheet" href="login.css">
-    <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="login.css">
+  <title>Cadastro</title>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../home/index.html">Ensino de Chinelo</a>
-                <a class="navbar-brand" href="login.html">Entrar</a>
-            </div>
-        </nav>
-    </header>
-    <div class="sidebar-wrapper position-relative">
-        <div class="sidebar d-flex flex-column p-2" id="sidebar">
-            <a href="/home/index.html" class="nav-link"><i class="bi bi-house-door"></i><span> Início</span></a>
-            <a href="/perfil/perfil.html" class="nav-link"><i class="bi bi-person"></i><span> Perfil</span></a>
-            <a href="/Configs/config.html" class="nav-link"><i class="bi bi-gear"></i><span> Configurações</span></a>
-            <a href="/Sobre nós/sobre.html" class="nav-link"><i class="bi bi-gear"></i><span> Sobre nós</span></a>
-        </div>
-    
-        <button class="btn btn-dark toggle-btn" id="toggleBtn">
-            ☰
-        </button>
-    </div>
+  <div class="form-container">
+    <h2>Cadastro</h2>
+    <form id="cadastro-form">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
+      <div class="form-group">
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" id="sobrenome" name="sobrenome" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" required>
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmar-senha">Confirmar Senha</label>
+        <input type="password" id="confirmar-senha" name="confirmar-senha" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Cadastrar</button>
+      </div>
+    </form>
+  </div>
 
-    <section>
-        <form class="row g-3">
-            <div class="col-md-4">
-              <label for="validationServer01" class="form-label">First name</label>
-              <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label for="validationServer02" class="form-label">Last name</label>
-              <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label for="validationServerUsername" class="form-label">Username</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
-                <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                  Please choose a username.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label for="validationServer03" class="form-label">City</label>
-              <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
-              <div id="validationServer03Feedback" class="invalid-feedback">
-                Please provide a valid city.
-              </div>
-            </div>
-            <div class="col-md-3">
-              <label for="validationServer04" class="form-label">State</label>
-              <select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-                <option selected disabled value="">Choose...</option>
-                <option>...</option>
-              </select>
-              <div id="validationServer04Feedback" class="invalid-feedback">
-                Please select a valid state.
-              </div>
-            </div>
-            <div class="col-md-3">
-              <label for="validationServer05" class="form-label">Zip</label>
-              <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-              <div id="validationServer05Feedback" class="invalid-feedback">
-                Please provide a valid zip.
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-check">
-                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
-                <label class="form-check-label" for="invalidCheck3">
-                  Agree to terms and conditions
-                </label>
-                <div id="invalidCheck3Feedback" class="invalid-feedback">
-                  You must agree before submitting.
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <button class="btn btn-primary" type="submit">Submit form</button>
-            </div>
-          </form>
-    </section>
-<script src="login.js"></script>
+<script>
+  document.getElementById('cadastro-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const nome = document.getElementById('nome').value;
+    const sobrenome = document.getElementById('sobrenome').value;
+    const email = document.getElementById('email').value;
+    const telefone = document.getElementById('telefone').value;
+    const senha = document.getElementById('senha').value;
+    const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+    if (senha !== confirmarSenha) {
+      alert('As senhas não coincidem!');
+      return;
+    }
+
+    const formData = {
+      nome: nome ,
+      sobrenome: sobrenome,
+      email: email,
+      telefone: telefone,
+      senha: senha
+    };
+
+    fetch('http://localhost:3000/api/cadastro', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro no servidor');
+      }
+      return response.json();
+    })
+    .then(data => {
+      alert('Cadastro realizado com sucesso!');
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+      alert('Erro ao cadastrar.');
+    });
+  });
+</script>
 </body>
 </html>
