@@ -44,6 +44,8 @@ app.post('/api/cadastro', (req, res) =>{
 
 
 
+
+
 const cursosPath = path.join(__dirname, 'data', 'cursos.json');
 
 // Configuração de onde os PDFs serão salvos
