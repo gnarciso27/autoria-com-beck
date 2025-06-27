@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="card-body curso__conteudo">
             <h5 class="card-title curso__titulo">${curso.nome}</h5>
             <p class="card-text curso__descr">${curso.descricao}</p>
-            <a href="${curso.link}" class="btn btn-primary">Ver curso</a>
+            <a href="${curso.link}" class="botao btn btn-roxo">Ver curso</a>
           </div>
         </div>
       `;

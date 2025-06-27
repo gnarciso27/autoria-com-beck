@@ -44,3 +44,19 @@ CREATE TABLE conteudos_salvos (
     salvo_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(estudante_id, conteudo_id)
 );
+
+mudar o perfil------
+
+mudar o template dos cursos-------
+
+mudar o formato dos cursos no index
+
+mudar a pagina de criaçao de curso
+
+personalizar o botao criar curso----------
+
+personalizar o botao assistir video
+
+personalizar os alerts
+
+personalizar os pdfs

@@ -121,10 +121,15 @@ body {
   margin-top: 100px;
 }
 
-.cursos {
-  margin-left: 80px;
-  margin-top: 40px;
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
+.btn-roxo {
+  background-color: #a678e2;
+  color: white;
+  border: none;
+  font-weight: bold;
 }
+
+.btn-roxo:hover {
+  background-color: #915cd3;
+  color: white;
+}
+
