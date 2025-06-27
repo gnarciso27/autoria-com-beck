@@ -50,38 +50,7 @@
     color: #fff;
   }
   
-  /* MENU LATERAL */
-  .sidebar {
-    width: 200px;
-    background-color: #a678e2;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    overflow-y: auto;
-    margin-top: 60px;
-  }
   
-  .sidebar h1 {
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-  }
-  
-  .sidebar ul li {
-    margin: 10px 0;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: background 0.3s;
-  }
-  
-  .sidebar ul li:hover {
-    background-color: #8c5edc;
-  }
   
   /* CONTEÚDO */
   .container {

@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <title>Perfil do Usuário</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" />
   <link rel="stylesheet" href="perfil.css" />
+  <link rel="stylesheet" href="/home/styles.css" />
 </head>
+
 <body>
   <!-- MENU SUPERIOR -->
   <header class="topbar">
     <div class="logo">Ensino de Chinelo</div>
-    <div class="login-btn" onclick="alert('Página de login em construção!')">Entrar</div>
+    <div class="login-btn" onclick="location.href='../cadastro/cadastro.html'">Entrar</div>
   </header>
 
-  <!-- MENU LATERAL -->
-  <nav class="sidebar">
-    <h1>Menu</h1>
-    <ul>
-      <li onclick="alert('Você está no Perfil')"><i class="fas fa-user"></i> Perfil</li>
-      <li onclick="alert('Configurações em breve...')"><i class="fas fa-cog"></i> Configurações</li>
-      
-    </ul>
-  </nav>
+  <!-- MENU LATERAL + BOTÃO -->
+  <div class="sidebar-wrapper">
+    <div class="sidebar" id="sidebar">
+      <a href="/home/index.html" class="nav-link"><i class="fas fa-home"></i><span> Início</span></a>
+      <a href="perfil.html" class="nav-link"><i class="fas fa-user"></i><span> Perfil</span></a>
+      <a href="#" class="nav-link"><i class="fas fa-cog"></i><span> Configurações</span></a>
+      <a href="#" class="nav-link"><i class="fas fa-info-circle"></i><span> Sobre nós</span></a>
+    </div>
+    <button class="toggle-btn" id="toggleBtn">☰</button>
+  </div>
+
 
   <!-- CONTEÚDO -->
   <div class="container">
@@ -31,10 +37,14 @@
       <input type="text" id="nameInput" style="display: none; text-align: center; font-weight: bold" />
 
       <div class="info">
-        <p><i class="fas fa-user-graduate"></i> <span id="roleDisplay"></span><input type="text" id="roleInput" style="display: none" /></p>
-        <p><i class="fas fa-map-marker-alt"></i> <span id="locationDisplay"></span><input type="text" id="locationInput" style="display: none" /></p>
-        <p><i class="fas fa-envelope"></i> <span id="emailDisplay"></span><input type="email" id="emailInput" style="display: none" /></p>
-        <p><i class="fas fa-phone"></i> <span id="phoneDisplay"></span><input type="text" id="phoneInput" style="display: none" /></p>
+        <p><i class="fas fa-user-graduate"></i> <span id="roleDisplay"></span><input type="text" id="roleInput"
+            style="display: none" /></p>
+        <p><i class="fas fa-map-marker-alt"></i> <span id="locationDisplay"></span><input type="text" id="locationInput"
+            style="display: none" /></p>
+        <p><i class="fas fa-envelope"></i> <span id="emailDisplay"></span><input type="email" id="emailInput"
+            style="display: none" /></p>
+        <p><i class="fas fa-phone"></i> <span id="phoneDisplay"></span><input type="text" id="phoneInput"
+            style="display: none" /></p>
       </div>
 
       <button class="save-btn" id="saveBtn">Salvar</button>
@@ -58,4 +68,5 @@
 
   <script src="perfil.js"></script>
 </body>
+
 </html>
