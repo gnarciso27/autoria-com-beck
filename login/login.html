@@ -28,9 +28,34 @@
   </div>
 
 <script>
-  document.getElementById('cadastro-form').addEventListener('submit', function(event) {
-   
-  });
+
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const senha = document.getElementById('senha').value;
+
+  try {
+    const res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha })
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || 'Falha no login');
+    }
+
+    // Armazena o token – localStorage é simples, mas fica vulnerável a XSS :contentReference[oaicite:6]{index=6}
+    localStorage.setItem('token', data.token);
+
+    // Redireciona para a página de perfil
+    window.location.href = 'perfil.html';
+  } catch (err) {
+    alert(err.message);
+    console.error('Erro:', err);
+  }
+});
 </script>
 </body>
 </html>

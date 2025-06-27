@@ -1,11 +1,23 @@
-
+// afonso
+const token = localStorage.getItem('token');
+    fetch('http://localhost:3000/api/perfil', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(user => {
+      document.getElementById('nameDisplay').innerText = user.nome;
+      document.getElementById('emailDisplay').innerText = user.email;
+      document.getElementById('phoneDisplay').innerText = user.telefone;
+      document.getElementById('roleDisplay').innerText = user.tipo_usuario;
+    })
+    .catch(err => console.error("Falha ao carregar perfil:", err));
 
 const user = {
-    nome: "Lucas Almeida",
-    papel: "Aluno",
-    cidade: "Fortaleza, CE",
-    email: "lucas.almeida@email.com",
-    telefone: "(85) 98888-7777",
+    nome: "",
+    papel: "",
+    cidade: "",
+    email: "",
+    telefone: "",
     cursosFavoritos: ["Front-End Web", "Lógica de Programação", "Python Básico"],
   };
   
@@ -101,6 +113,7 @@ const user = {
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('expanded');
   });
+
 
 
   
