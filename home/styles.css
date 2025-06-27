@@ -47,6 +47,10 @@ body {
   color: #fff;
 }
 
+.sidebar-wrapper {
+  position: relative;
+}
+
 .sidebar {
   width: 60px;
   transition: width 0.3s;
@@ -121,4 +125,6 @@ body {
   margin-left: 80px;
   margin-top: 40px;
   padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
