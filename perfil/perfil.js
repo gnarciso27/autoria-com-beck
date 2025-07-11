@@ -12,46 +12,47 @@ const token = localStorage.getItem('token');
     })
     .catch(err => console.error("Falha ao carregar perfil:", err));
 
-const user = {
-    nome: "",
-    papel: "",
-    cidade: "",
-    email: "",
-    telefone: "",
-    cursosFavoritos: ["Front-End Web", "Lógica de Programação", "Python Básico"],
-  };
+    const user = {
+      nome: "",
+      papel: "",
+      cidade: "",
+      email: "",
+      telefone: "",
+      cursosFavoritos: ["Front-End Web", "Lógica de Programação", "Python Básico"],
+    };
+    
+    function atualizarUserNoFrontend(userData) {
+      user.nome = userData.nome || "";
+      user.email = userData.email || "";
+      user.telefone = userData.telefone || "";
+      user.papel = userData.tipo_usuario || "";
+      user.cidade = userData.cidade || "";
+      user.cursosFavoritos = userData.cursosFavoritos || user.cursosFavoritos;
+    
+      mostrarDados();  // Atualiza a UI com o objeto user atualizado
+    }
+    
+    if (token) {
+      fetch('http://localhost:3000/api/perfil', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Falha na autenticação');
+        return res.json();
+      })
+      .then(userData => {
+        atualizarUserNoFrontend(userData);
+      })
+      .catch(err => {
+        console.error("Falha ao carregar perfil:", err);
+        mostrarDados();  // mostra dados padrão
+      });
+    } else {
+      // Sem token, mostra dados padrão
+      mostrarDados();
+    }
+    
   
-  const saveBtn = document.getElementById("saveBtn");
-  const favBtn = document.getElementById("favBtn");
-  const tooltipFav = document.getElementById("tooltipFav");
-  const courseList = document.getElementById("courseList");
-  const courseInput = document.getElementById("courseInput");
-  const closeTooltip = document.getElementById("closeTooltip");
-  
-  function mostrarDados() {
-    document.getElementById("nameDisplay").textContent = user.nome;
-    document.getElementById("roleDisplay").textContent = user.papel;
-    document.getElementById("locationDisplay").textContent = user.cidade;
-    document.getElementById("emailDisplay").textContent = user.email;
-    document.getElementById("phoneDisplay").textContent = user.telefone;
-  
-    document.getElementById("nameInput").value = user.nome;
-    document.getElementById("roleInput").value = user.papel;
-    document.getElementById("locationInput").value = user.cidade;
-    document.getElementById("emailInput").value = user.email;
-    document.getElementById("phoneInput").value = user.telefone;
-  
-    courseList.innerHTML = "";
-    courseInput.value = user.cursosFavoritos.join("\n");
-  
-    user.cursosFavoritos.forEach((curso) => {
-      const li = document.createElement("li");
-      li.textContent = curso;
-      courseList.appendChild(li);
-    });
-  }
-  
-  mostrarDados();
   
   function toggleEdit() {
     const fields = ["name", "role", "location", "email", "phone"];
