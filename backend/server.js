@@ -125,8 +125,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.use(cors());
-app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -295,6 +293,19 @@ app.post('/api/cursos/:nomeCurso/capitulo-video/:index/adicionar-video', (req, r
     fs.writeFileSync(cursosPath, JSON.stringify(cursos, null, 2));
     res.json({ mensagem: "Vídeo adicionado com sucesso" });
 });
+
+// Serve os arquivos estáticos das páginas HTML
+app.use(express.static(path.join(__dirname, '..', 'cadastro')));
+app.use(express.static(path.join(__dirname, '..', 'login')));
+app.use(express.static(path.join(__dirname, '..', 'perfil')));
+app.use(express.static(path.join(__dirname, '..', 'home')));
+app.use(express.static(path.join(__dirname, '..', 'Cursos')));
+
+// Fallback para index.html se você quiser SPA-style ou rota padrão
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'home', 'index.html')); // ou outro HTML padrão
+});
+
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
