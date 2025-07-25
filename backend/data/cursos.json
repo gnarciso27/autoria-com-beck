@@ -1,34 +1,3 @@
 [
-  {
-    "nome": "abc fc",
-    "descricao": "Melhor time do RN",
-    "imagem": "https://th.bing.com/th/id/OIP.RdrqGMUQmJo0_-oIkOFzFQHaIY?w=152&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
-    "link": "/Cursos/abc fc/index.html",
-    "capitulosExercicios": [
-      {
-        "titulo": "capitulo 1",
-        "exercicios": []
-      },
-      {
-        "titulo": "capitulo 2",
-        "exercicios": []
-      }
-    ],
-    "capitulosVideos": [
-      {
-        "titulo": "capitulo 1",
-        "videos": []
-      },
-      {
-        "titulo": "capitulo 2",
-        "videos": []
-      }
-    ]
-  },
-  {
-    "nome": "flamengo",
-    "descricao": "vai ganhar o mundiau",
-    "imagem": "https://th.bing.com/th/id/OIP.uG1CdwmealVXDzkeovMHjgHaG9?w=228&h=187&c=7&r=0&o=5&pid=1.7",
-    "link": "/Cursos/flamengo/index.html"
-  }
+  
 ]
