@@ -32,7 +32,7 @@ body {
   font-size: 22px;
 }
 
-.topbar .login-btn {
+.topbar .login-btn a {
   background-color: #fff;
   color: #a678e2;
   padding: 8px 16px;
