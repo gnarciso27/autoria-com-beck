@@ -4,13 +4,13 @@ const sidebar = document.getElementById('sidebar');
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('expanded');
   });
-const nomeCurso = window.location.pathname.split('/')[2];
+const slug = window.location.pathname.split('/')[2];
 
 document.getElementById('adicionarCapituloBtn').addEventListener('click', () => {
   const titulo = prompt("Digite o nome do novo capítulo:");
   if (!titulo) return;
 
-  fetch(`http://localhost:3000/api/cursos/${nomeCurso}/adicionar-capitulo-exercicio`, {
+  fetch(`http://localhost:3000/api/cursos/${slug}/adicionar-capitulo-exercicio`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ titulo })
@@ -30,7 +30,7 @@ document.getElementById('adicionarCapituloVideoBtn').addEventListener('click', (
   const titulo = prompt("Digite o nome do novo capítulo de vídeo:");
   if (!titulo) return;
 
-  fetch(`http://localhost:3000/api/cursos/${nomeCurso}/adicionar-capitulo-video`, {
+  fetch(`http://localhost:3000/api/cursos/${slug}/adicionar-capitulo-video`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ titulo })
@@ -55,7 +55,7 @@ document.addEventListener('submit', function (e) {
 
     const formData = new FormData(form);
 
-    fetch(`http://localhost:3000/api/cursos/${nomeCurso}/capitulo-exercicio/${capituloIndex}/upload`, {
+    fetch(`http://localhost:3000/api/cursos/${slug}/capitulo-exercicio/${capituloIndex}/upload`, {
       method: 'POST',
       body: formData
     })
@@ -72,7 +72,7 @@ document.addEventListener('submit', function (e) {
 });
 
 function carregarCapitulos() {
-  fetch(`http://localhost:3000/api/cursos/${nomeCurso}`)
+  fetch(`http://localhost:3000/api/cursos/${slug}`)
     .then(res => res.json())
     .then(curso => {
       const accordionEx = document.getElementById('accordionExercicios');
@@ -144,7 +144,7 @@ function carregarCapitulos() {
               return;
             }
 
-            fetch(`http://localhost:3000/api/cursos/${nomeCurso}/capitulo-video/${index}/adicionar-video`, {
+            fetch(`http://localhost:3000/api/cursos/${slug}/capitulo-video/${index}/adicionar-video`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ url })

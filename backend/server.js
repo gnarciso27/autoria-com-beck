@@ -118,9 +118,9 @@ const cursosPath = path.join(__dirname, 'data', 'cursos.json');
 // Configuração de onde os PDFs serão salvos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const nomeCurso = req.params.nome;
+    const slug = req.params.slug;
     const capituloIndex = req.params.capituloIndex;
-    const dir = path.join(__dirname, '..', 'Cursos', nomeCurso, 'exercicios', capituloIndex);
+    const dir = path.join(__dirname, '..', 'Cursos', slug, 'exercicios', capituloIndex);
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -160,6 +160,7 @@ app.post('/api/cursos', (req, res) => {
     const nomeSlug = slugify(nome);
     const novoCurso = {
       nome,
+      slug: nomeSlug,
       descricao,
       imagem,
       link: `/Cursos/${nomeSlug}/index.html`
@@ -192,14 +193,14 @@ app.post('/api/cursos', (req, res) => {
 });
 
 // Rota para obter um curso específico
-app.get('/api/cursos/:nome', (req, res) => {
-  const { nome } = req.params;
+app.get('/api/cursos/:slug', (req, res) => {
+  const { slug } = req.params;
 
   fs.readFile(cursosPath, 'utf8', (err, data) => {
     if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
 
     const cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.nome === nome);
+    const curso = cursos.find(c => c.slug === slug);
 
     if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
 
@@ -208,15 +209,15 @@ app.get('/api/cursos/:nome', (req, res) => {
 });
 
 // Rota para adicionar capítulo de exercício
-app.post('/api/cursos/:nome/adicionar-capitulo-exercicio', (req, res) => {
-  const { nome } = req.params;
+app.post('/api/cursos/:slug/adicionar-capitulo-exercicio', (req, res) => {
+  const { slug } = req.params;
   const { titulo } = req.body;
 
   fs.readFile(cursosPath, 'utf8', (err, data) => {
     if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
 
     let cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.nome === nome);
+    const curso = cursos.find(c => c.slug === slug);
 
     if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
 
@@ -235,15 +236,15 @@ app.post('/api/cursos/:nome/adicionar-capitulo-exercicio', (req, res) => {
 });
 
 // Rota para adicionar capítulo de vídeo
-app.post('/api/cursos/:nome/adicionar-capitulo-video', (req, res) => {
-  const { nome } = req.params;
+app.post('/api/cursos/:slug/adicionar-capitulo-video', (req, res) => {
+  const { slug } = req.params;
   const { titulo } = req.body;
 
   fs.readFile(cursosPath, 'utf8', (err, data) => {
     if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
 
     let cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.nome === nome);
+    const curso = cursos.find(c => c.slug === slug);
 
     if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
 
@@ -262,8 +263,8 @@ app.post('/api/cursos/:nome/adicionar-capitulo-video', (req, res) => {
 });
 
 // Rota para fazer upload de PDF em capítulo de exercício
-app.post('/api/cursos/:nome/capitulo-exercicio/:capituloIndex/upload', upload.single('arquivo'), (req, res) => {
-  const { nome, capituloIndex } = req.params;
+app.post('/api/cursos/:slug/capitulo-exercicio/:capituloIndex/upload', upload.single('arquivo'), (req, res) => {
+  const { slug, capituloIndex } = req.params;
   const file = req.file;
 
   if (!file) return res.status(400).json({ erro: 'Nenhum arquivo enviado' });
@@ -272,13 +273,13 @@ app.post('/api/cursos/:nome/capitulo-exercicio/:capituloIndex/upload', upload.si
     if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
 
     let cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.nome === nome);
+    const curso = cursos.find(c => c.slug === slug);
     if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
 
     const capitulo = curso.capitulosExercicios?.[capituloIndex];
     if (!capitulo) return res.status(404).json({ erro: 'Capítulo não encontrado' });
-
-    const relativePath = `/Cursos/${nome}/exercicios/${capituloIndex}/${file.filename}`;
+//qualquer coisa mudar aqui obs:ignorar essa msg
+    const relativePath = `/Cursos/${slug}/exercicios/${capituloIndex}/${file.filename}`;
     capitulo.exercicios.push(relativePath);
 
     fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
@@ -289,13 +290,13 @@ app.post('/api/cursos/:nome/capitulo-exercicio/:capituloIndex/upload', upload.si
 });
 
 // ✅ Rota corrigida: Adicionar vídeo a capítulo de vídeo
-app.post('/api/cursos/:nomeCurso/capitulo-video/:index/adicionar-video', (req, res) => {
-  const { nomeCurso, index } = req.params;
+app.post('/api/cursos/:slug/capitulo-video/:index/adicionar-video', (req, res) => {
+  const { slug, index } = req.params;
   const { url } = req.body;
 
   const cursos = JSON.parse(fs.readFileSync(cursosPath, 'utf-8'));
 
-  const curso = cursos.find(c => c.nome === nomeCurso);
+  const curso = cursos.find(c => c.slug === slug);
   if (!curso) return res.status(404).json({ mensagem: "Curso não encontrado" });
 
   const capitulo = curso.capitulosVideos?.[index];
