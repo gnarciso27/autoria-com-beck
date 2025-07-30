@@ -1,61 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #cbb4e3, #e1c5ff);
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
 }
 
 .form-container {
   background-color: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   width: 100%;
   max-width: 400px;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .form-container h2 {
   text-align: center;
+  color: #a678e2;
   margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
 
 .form-group input {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
 .form-group input:focus {
-  border-color: rgb(124, 25, 124);
+  border-color: #a678e2;
   outline: none;
 }
 
 .form-group button {
   width: 100%;
   padding: 0.75rem;
-  background-color: rgb(124, 25, 124);
+  background-color: #a678e2;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .form-group button:hover {
-  background-color: purple;
+  background-color: #915cd3;
+}
+
+.form-link {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-link a {
+  color: #6a1b9a;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.form-link a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

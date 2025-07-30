@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Ensino de Chinelo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="login.css">
-  <title>login</title>
 </head>
 <body>
   <div class="form-container">
-    <h2>Login</h2>
+    <h2><i class="fas fa-sign-in-alt"></i> Entrar</h2>
     <form id="login-form">
       <div class="form-group">
         <label for="email">Email</label>
@@ -18,8 +20,8 @@
         <label for="senha">Senha</label>
         <input type="password" id="senha" name="senha" required>
       </div>
-      <div>
-        <a href="../cadastro/cadastro.html">Você ainda não possui uma conta? Cadastre-se!</a>        
+      <div class="form-link">
+        <a href="../cadastro/cadastro.html">Ainda não possui conta? <strong>Cadastre-se</strong></a>        
       </div>
       <div class="form-group">
         <button type="submit">Entrar</button>
@@ -28,7 +30,6 @@
   </div>
 
 <script>
-
 document.getElementById('login-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   const email = document.getElementById('email').value;
@@ -46,10 +47,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
       throw new Error(data.error || 'Falha no login');
     }
 
-    // Armazena o token – localStorage é simples, mas fica vulnerável a XSS :contentReference[oaicite:6]{index=6}
     localStorage.setItem('token', data.token);
-
-    // Redireciona para a página de perfil
     window.location.href = 'perfil.html';
   } catch (err) {
     alert(err.message);
