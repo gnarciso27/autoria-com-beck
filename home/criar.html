@@ -36,8 +36,7 @@
         <label for="descricao">Descrição:</label><br>
         <textarea id="descricao" name="descricao" required></textarea><br><br>
         
-        <label for="imagem">URL da Imagem:</label><br>
-        <input type="text" id="imagem" name="imagem" required><br><br>
+        
         
         <button type="submit">Salvar Curso</button>
       </form>
@@ -49,7 +48,7 @@
 
       const nome = document.getElementById('nome').value;
       const descricao = document.getElementById('descricao').value;
-      const imagem = document.getElementById('imagem').value;
+      
 
       const res = await fetch('http://localhost:3000/api/cursos', {
         method: 'POST',

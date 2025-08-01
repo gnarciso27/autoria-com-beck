@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     cursos.forEach(curso => {
       container.innerHTML += `
         <div class="curso card m-3" style="width: 18rem;">
-          <img src="${curso.imagem}" class="card-img-top curso__img" alt="Imagem do Curso">
+          
           <div class="card-body curso__conteudo">
             <h5 class="card-title curso__titulo">${curso.nome}</h5>
             <p class="card-text curso__descr">${curso.descricao}</p>
