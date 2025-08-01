@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro - Ensino de Chinelo</title>
+  <title>Cadastro - Ensino de Chinelo</title> <!--links-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="cadastro.css" />
 </head>
 <body>
-  <div class="form-container">
+  <div class="form-container"><!--icone -->
     <h2><i class="fas fa-user-plus"></i> Cadastro</h2>
     <form id="cadastro-form">
       <div class="form-group">
+        <!--os campos a serem preenchidos-->
         <label for="nome">Nome</label>
         <input type="text" id="nome" name="nome" required />
       </div>
@@ -43,7 +44,7 @@
       </div>
     </form>
   </div>
-
+  <!-- Script JavaScript para manipulação do formulário -->
   <script>
     document.getElementById('cadastro-form').addEventListener('submit', function (event) {
       event.preventDefault();
@@ -61,7 +62,7 @@
       }
 
       const formData = { nome, sobrenome, email, telefone, senha };
-
+ // Envia os dados para o servidor 
       fetch('http://localhost:3000/api/cadastro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

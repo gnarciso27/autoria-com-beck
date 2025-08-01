@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/* Estiliza o corpo da página */
 body {
   font-family: "Segoe UI", sans-serif;
   background: linear-gradient(135deg, #cbb4e3, #e1c5ff);
@@ -12,7 +12,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+/* Container pri*/
 .form-container {
   background-color: #fff;
   padding: 1.5rem;
@@ -22,14 +22,14 @@ body {
   max-width: 320px; /* menor largura */
   animation: fadeIn 0.4s ease-in-out;
 }
-
+/* Título do formulário */
 .form-container h2 {
   text-align: center;
   color: #a678e2;
   margin-bottom: 1.2rem;
   font-size: 1.3rem;
 }
-
+/* Agrupamento */
 .form-group {
   margin-bottom: 0.8rem;
 }
@@ -42,6 +42,7 @@ body {
   color: #333;
 }
 
+/* campos de entrada  */
 .form-group input {
   width: 100%;
   padding: 0.5rem;
@@ -49,7 +50,7 @@ body {
   border-radius: 6px;
   font-size: 0.9rem;
 }
-
+/*input em foco */
 .form-group input:focus {
   border-color: #a678e2;
   outline: none;
