@@ -136,189 +136,201 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Rota para obter todos os cursos
 app.get('/api/cursos', (req, res) => {
-  fs.readFile(cursosPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
-    const cursos = JSON.parse(data || '[]');
-    res.json(cursos);
+  const sql = 'SELECT * FROM cursos';
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ erro: 'Erro ao buscar cursos' });
+    res.json(results);
   });
 });
+
 
 // Rota para criar novo curso
 app.post('/api/cursos', (req, res) => {
   const { nome, descricao, imagem } = req.body;
+  const slug = slugify(nome);
+  const link = `/Cursos/${slug}/index.html`;
 
-  fs.readFile(cursosPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
-
-    let cursos = [];
-    try {
-      cursos = JSON.parse(data || '[]');
-    } catch (parseErr) {
-      return res.status(500).json({ erro: 'Erro ao analisar cursos.json' });
+  const sql = `INSERT INTO cursos (nome, slug, descricao, imagem, link) VALUES (?, ?, ?, ?, ?)`;
+  db.query(sql, [nome, slug, descricao, imagem, link], (err, result) => {
+    if (err) {
+      console.error('Erro ao criar curso:', err);
+      return res.status(500).json({ erro: 'Erro ao criar curso' });
     }
 
-    const nomeSlug = slugify(nome);
-    const novoCurso = {
-      nome,
-      slug: nomeSlug,
-      descricao,
-      imagem,
-      link: `/Cursos/${nomeSlug}/index.html`
-    };
+    const cursoId = result.insertId;
+    const newDir = path.join(__dirname, '..', 'Cursos', slug);
+    const templateDir = path.join(__dirname, 'template');
 
-    cursos.push(novoCurso);
+    fs.mkdirSync(newDir, { recursive: true });
+    fs.copyFileSync(path.join(templateDir, 'curso.html'), path.join(newDir, 'index.html'));
+    fs.copyFileSync(path.join(templateDir, 'style.css'), path.join(newDir, 'style.css'));
+    fs.copyFileSync(path.join(templateDir, 'scriptt.js'), path.join(newDir, 'scriptt.js'));
 
-    fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
-      if (err) return res.status(500).json({ erro: 'Erro ao salvar o curso' });
-
-      const templateDir = path.join(__dirname, 'template');
-      const templateHtml = path.join(templateDir, 'curso.html');
-      const templateCss = path.join(templateDir, 'style.css');
-      const templateJs = path.join(templateDir, 'scriptt.js');
-
-      const newDir = path.join(__dirname, '..', 'Cursos', nomeSlug);
-      const newHtml = path.join(newDir, 'index.html');
-      const newCss = path.join(newDir, 'style.css');
-      const newJs = path.join(newDir, 'scriptt.js');
-
-      fs.mkdirSync(newDir, { recursive: true });
-      fs.copyFileSync(templateHtml, newHtml);
-      fs.copyFileSync(templateCss, newCss);
-      fs.copyFileSync(templateJs, newJs);
-
-      res.status(201).json({ mensagem: 'Curso criado com sucesso!' });
-    });
+    res.status(201).json({ mensagem: 'Curso criado com sucesso!', id: cursoId });
   });
-
 });
+
 
 // Rota para obter um curso específico
 app.get('/api/cursos/:slug', (req, res) => {
   const { slug } = req.params;
 
-  fs.readFile(cursosPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+  const sqlCurso = 'SELECT id FROM cursos WHERE slug = ?';
+  db.query(sqlCurso, [slug], (err, cursos) => {
+    if (err || cursos.length === 0) return res.status(404).json({ erro: 'Curso não encontrado' });
 
-    const cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.slug === slug);
+    const cursoId = cursos[0].id;
 
-    if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
+    const sqlEx = `
+      SELECT ce.id AS capitulo_id, ce.titulo, e.caminho
+      FROM capitulos_exercicios ce
+      LEFT JOIN exercicios e ON e.capitulo_id = ce.id
+      WHERE ce.curso_id = ?
+    `;
 
-    res.json(curso);
+    const sqlVid = `
+      SELECT cv.id AS capitulo_id, cv.titulo, v.url
+      FROM capitulos_videos cv
+      LEFT JOIN videos v ON v.capitulo_id = cv.id
+      WHERE cv.curso_id = ?
+    `;
+
+    db.query(sqlEx, [cursoId], (err, exResults) => {
+      if (err) return res.status(500).json({ erro: 'Erro ao buscar exercícios' });
+
+      const capitulosExercicios = [];
+      const mapEx = new Map();
+
+      exResults.forEach(row => {
+        if (!mapEx.has(row.capitulo_id)) {
+          mapEx.set(row.capitulo_id, { titulo: row.titulo, exercicios: [] });
+        }
+        if (row.caminho) {
+          mapEx.get(row.capitulo_id).exercicios.push(row.caminho);
+        }
+      });
+
+      for (const item of mapEx.values()) {
+        capitulosExercicios.push(item);
+      }
+
+      db.query(sqlVid, [cursoId], (err, vidResults) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao buscar vídeos' });
+
+        const capitulosVideos = [];
+        const mapVid = new Map();
+
+        vidResults.forEach(row => {
+          if (!mapVid.has(row.capitulo_id)) {
+            mapVid.set(row.capitulo_id, { titulo: row.titulo, videos: [] });
+          }
+          if (row.url) {
+            mapVid.get(row.capitulo_id).videos.push(row.url);
+          }
+        });
+
+        for (const item of mapVid.values()) {
+          capitulosVideos.push(item);
+        }
+
+        res.json({ capitulosExercicios, capitulosVideos });
+      });
+    });
   });
 });
+
+
 
 // Rota para adicionar capítulo de exercício
 app.post('/api/cursos/:slug/adicionar-capitulo-exercicio', (req, res) => {
   const { slug } = req.params;
   const { titulo } = req.body;
 
-  fs.readFile(cursosPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+  const sqlCurso = 'SELECT id FROM cursos WHERE slug = ?';
+  db.query(sqlCurso, [slug], (err, cursos) => {
+    if (err || cursos.length === 0) return res.status(404).json({ erro: 'Curso não encontrado' });
 
-    let cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.slug === slug);
-
-    if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
-
-    if (!curso.capitulosExercicios) curso.capitulosExercicios = [];
-
-    curso.capitulosExercicios.push({
-      titulo,
-      exercicios: []
-    });
-
-    fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
-      if (err) return res.status(500).json({ erro: 'Erro ao salvar capítulo' });
-      res.json({ mensagem: 'Capítulo adicionado com sucesso' });
+    const cursoId = cursos[0].id;
+    const sqlInsert = 'INSERT INTO capitulos_exercicios (curso_id, titulo) VALUES (?, ?)';
+    db.query(sqlInsert, [cursoId, titulo], (err) => {
+      if (err) return res.status(500).json({ erro: 'Erro ao adicionar capítulo' });
+      res.json({ mensagem: 'Capítulo de exercício adicionado com sucesso' });
     });
   });
 });
+
 
 // Rota para adicionar capítulo de vídeo
 app.post('/api/cursos/:slug/adicionar-capitulo-video', (req, res) => {
   const { slug } = req.params;
   const { titulo } = req.body;
 
-  fs.readFile(cursosPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+  const sqlCurso = 'SELECT id FROM cursos WHERE slug = ?';
+  db.query(sqlCurso, [slug], (err, cursos) => {
+    if (err || cursos.length === 0) return res.status(404).json({ erro: 'Curso não encontrado' });
 
-    let cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.slug === slug);
-
-    if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
-
-    if (!curso.capitulosVideos) curso.capitulosVideos = [];
-
-    curso.capitulosVideos.push({
-      titulo,
-      videos: []
-    });
-
-    fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
-      if (err) return res.status(500).json({ erro: 'Erro ao salvar capítulo de vídeo' });
+    const cursoId = cursos[0].id;
+    const sqlInsert = 'INSERT INTO capitulos_videos (curso_id, titulo) VALUES (?, ?)';
+    db.query(sqlInsert, [cursoId, titulo], (err) => {
+      if (err) return res.status(500).json({ erro: 'Erro ao adicionar capítulo de vídeo' });
       res.json({ mensagem: 'Capítulo de vídeo adicionado com sucesso' });
     });
   });
 });
 
+
 // Rota para fazer upload de PDF em capítulo de exercício
 app.post('/api/cursos/:slug/capitulo-exercicio/:capituloIndex/upload', upload.single('arquivo'), (req, res) => {
   const { slug, capituloIndex } = req.params;
   const file = req.file;
-
   if (!file) return res.status(400).json({ erro: 'Nenhum arquivo enviado' });
 
-  fs.readFile(cursosPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ erro: 'Erro ao ler os cursos' });
+  const relativePath = `/Cursos/${slug}/exercicios/${capituloIndex}/${file.filename}`;
 
-    let cursos = JSON.parse(data || '[]');
-    const curso = cursos.find(c => c.slug === slug);
-    if (!curso) return res.status(404).json({ erro: 'Curso não encontrado' });
+  const sqlCurso = 'SELECT id FROM cursos WHERE slug = ?';
+  db.query(sqlCurso, [slug], (err, cursos) => {
+    if (err || cursos.length === 0) return res.status(404).json({ erro: 'Curso não encontrado' });
 
-    const capitulo = curso.capitulosExercicios?.[capituloIndex];
-    if (!capitulo) return res.status(404).json({ erro: 'Capítulo não encontrado' });
-//qualquer coisa mudar aqui obs:ignorar essa msg
-    const relativePath = `/Cursos/${slug}/exercicios/${capituloIndex}/${file.filename}`;
-    capitulo.exercicios.push(relativePath);
+    const cursoId = cursos[0].id;
+    const sqlCapitulos = 'SELECT id FROM capitulos_exercicios WHERE curso_id = ? LIMIT 1 OFFSET ?';
+    db.query(sqlCapitulos, [cursoId, parseInt(capituloIndex)], (err, caps) => {
+      if (err || caps.length === 0) return res.status(404).json({ erro: 'Capítulo não encontrado' });
 
-    fs.writeFile(cursosPath, JSON.stringify(cursos, null, 2), err => {
-      if (err) return res.status(500).json({ erro: 'Erro ao salvar capítulo' });
-      res.json({ mensagem: 'Exercício enviado com sucesso', caminho: relativePath });
+      const capituloId = caps[0].id;
+      const sqlInsert = 'INSERT INTO exercicios (capitulo_id, caminho) VALUES (?, ?)';
+      db.query(sqlInsert, [capituloId, relativePath], (err) => {
+        if (err) return res.status(500).json({ erro: 'Erro ao salvar exercício' });
+        res.json({ mensagem: 'Exercício enviado com sucesso', caminho: relativePath });
+      });
     });
   });
 });
+
 
 // ✅ Rota corrigida: Adicionar vídeo a capítulo de vídeo
 app.post('/api/cursos/:slug/capitulo-video/:index/adicionar-video', (req, res) => {
   const { slug, index } = req.params;
   const { url } = req.body;
 
-  const cursos = JSON.parse(fs.readFileSync(cursosPath, 'utf-8'));
+  const sqlCurso = 'SELECT id FROM cursos WHERE slug = ?';
+  db.query(sqlCurso, [slug], (err, cursos) => {
+    if (err || cursos.length === 0) return res.status(404).json({ mensagem: 'Curso não encontrado' });
 
-  const curso = cursos.find(c => c.slug === slug);
-  if (!curso) return res.status(404).json({ mensagem: "Curso não encontrado" });
+    const cursoId = cursos[0].id;
+    const sqlCapitulos = 'SELECT id FROM capitulos_videos WHERE curso_id = ? LIMIT 1 OFFSET ?';
+    db.query(sqlCapitulos, [cursoId, parseInt(index)], (err, caps) => {
+      if (err || caps.length === 0) return res.status(404).json({ mensagem: 'Capítulo não encontrado' });
 
-  const capitulo = curso.capitulosVideos?.[index];
-  if (!capitulo) return res.status(404).json({ mensagem: "Capítulo não encontrado" });
-
-  capitulo.videos = capitulo.videos || [];
-  capitulo.videos.push(url);
-
-  fs.writeFileSync(cursosPath, JSON.stringify(cursos, null, 2));
-  res.json({ mensagem: "Vídeo adicionado com sucesso" });
+      const capituloId = caps[0].id;
+      const sqlInsert = 'INSERT INTO videos (capitulo_id, url) VALUES (?, ?)';
+      db.query(sqlInsert, [capituloId, url], (err) => {
+        if (err) return res.status(500).json({ mensagem: 'Erro ao salvar vídeo' });
+        res.json({ mensagem: 'Vídeo adicionado com sucesso' });
+      });
+    });
+  });
 });
 
-
-// Fallback para index.html se você quiser SPA-style ou rota padrão
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'home', 'index.html')); // ou outro HTML padrão
-});
-
-
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
 
 function slugify(str) {
   return str.toLowerCase().normalize("NFD")
@@ -327,3 +339,7 @@ function slugify(str) {
     .replace(/[^\w\-]+/g, '')        // remove caracteres especiais
     .replace(/\-\-+/g, '-');         // remove múltiplos hífens
 }
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
