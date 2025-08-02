@@ -48,14 +48,6 @@ CREATE TABLE usuarios (
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE cursos (
-    id SERIAL PRIMARY KEY,
-    professor_id INTEGER REFERENCES usuarios(id),
-    titulo VARCHAR(255) NOT NULL,
-    descricao TEXT,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE conteudos (
     id SERIAL PRIMARY KEY,
     curso_id INTEGER REFERENCES cursos(id),
