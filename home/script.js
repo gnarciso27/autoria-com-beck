@@ -30,3 +30,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error(err);
   }
 });
+
+// função para mostrar o botao de criar curso caso o usuario seja professor
+
+
+  async function verificarPermissao() {
+    const token = localStorage.getItem("token");
+    const btnCriar = document.getElementById("btnCriarCurso");
+
+    if (!token) {
+      // Se não estiver logado, já esconde o botão
+      if (btnCriar) btnCriar.style.display = "none";
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:3000/api/perfil", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+
+      if (!res.ok) {
+        if (btnCriar) btnCriar.style.display = "none";
+        return;
+      }
+
+      const user = await res.json();
+
+      if (user.tipo_usuario !== "professor") {
+        if (btnCriar) btnCriar.style.display = "none";
+      }
+    } catch (error) {
+      console.error("Erro ao verificar permissão:", error);
+      if (btnCriar) btnCriar.style.display = "none";
+    }
+  }
+
+  verificarPermissao();
+

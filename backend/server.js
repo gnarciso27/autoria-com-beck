@@ -13,6 +13,9 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'seuSegredoSuperSecreto';
 
 
+/////
+
+
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
@@ -30,15 +33,14 @@ app.use(express.static(path.join(__dirname, '..', 'perfil')));
 app.use(express.static(path.join(__dirname, '..', 'home')));
 
 app.post('/api/cadastro', async (req, res) => {
-  const { nome, sobrenome, email, telefone, senha } = req.body;
-  if (!nome || !sobrenome || !email || !telefone || !senha) {
+  const { nome, sobrenome, email, telefone, senha, tipo_usuario } = req.body;
+  if (!nome || !sobrenome || !email || !telefone || !senha || !tipo_usuario) {
     return res.status(400).json({ error: "Todos os campos são obrigatórios." });
   }
 
   try {
     const senhaHash = await bcrypt.hash(senha, 10);
     const nomeCompleto = `${nome} ${sobrenome}`;
-    const tipo_usuario = "estudante";
 
     const sql = `
         INSERT INTO usuarios (nome, email, telefone, senha_hash, tipo_usuario)
@@ -83,6 +85,25 @@ app.post('/api/login', (req, res) => {
   });
 });
 
+//////////////
+
+
+function verificarProfessor(req, res, next) {
+  const sql = "SELECT tipo_usuario FROM usuarios WHERE id = ?";
+  db.query(sql, [req.userId], (err, results) => {
+    if (err) return res.status(500).json({ error: "Erro no servidor." });
+    if (results.length === 0) return res.status(404).json({ error: "Usuário não encontrado." });
+
+    const user = results[0];
+    if (user.tipo_usuario !== "professor") {
+      return res.status(403).json({ error: "Acesso negado. Apenas professores podem realizar esta ação." });
+    }
+    next();
+  });
+}
+
+
+//////////////
 
 function autenticarJWT(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -110,6 +131,9 @@ app.get('/api/perfil', autenticarJWT, (req, res) => {
     res.json(results[0]);
   });
 });
+
+////////////
+
 
 
 
@@ -143,9 +167,20 @@ app.get('/api/cursos', (req, res) => {
   });
 });
 
+const storageCurso = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const dir = path.join(__dirname, '..', 'Cursos', 'imagens'); 
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+const uploadCurso = multer({ storage: storageCurso });
 
 // Rota para criar novo curso
-app.post('/api/cursos', (req, res) => {
+app.post('/api/cursos', autenticarJWT, verificarProfessor,(req, res) => {
   const { nome, descricao, imagem } = req.body;
   const slug = slugify(nome);
   const link = `/Cursos/${slug}/index.html`;
@@ -169,6 +204,35 @@ app.post('/api/cursos', (req, res) => {
     res.status(201).json({ mensagem: 'Curso criado com sucesso!', id: cursoId });
   });
 });
+
+
+// Rota para deletar curso
+
+// Rota para deletar curso
+
+app.delete('/api/cursos/:slug', autenticarJWT, verificarProfessor, (req, res) => {
+  const { slug } = req.params;
+
+  const sqlDelete = 'DELETE FROM cursos WHERE slug = ?';
+  db.query(sqlDelete, [slug], (err, result) => {
+    if (err) {
+      console.error('Erro ao deletar curso:', err);
+      return res.status(500).json({ erro: 'Erro ao deletar curso' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ erro: 'Curso não encontrado' });
+    }
+
+    // também pode remover a pasta de arquivos
+    const cursoDir = path.join(__dirname, '..', 'Cursos', slug);
+    if (fs.existsSync(cursoDir)) {
+      fs.rmSync(cursoDir, { recursive: true, force: true });
+    }
+
+    res.json({ mensagem: 'Curso deletado com sucesso!' });
+  });
+});
+
 
 
 // Rota para obter um curso específico

@@ -40,6 +40,9 @@ const user = {
     phoneDisplay.textContent = user.telefone;
     phoneInput.value = user.telefone;
 
+    roleDisplay.textContent = user.tipo_usuario;
+    roleInput.value = user.tipo_usuario;
+
     courseList.innerHTML = "";
     user.cursosFavoritos.forEach((curso) => {
       const li = document.createElement("li");
@@ -54,7 +57,7 @@ const user = {
     user.nome = userData.nome || user.nome;
     user.email = userData.email || user.email;
     user.telefone = userData.telefone || user.telefone;
-    user.papel = userData.tipo_usuario || user.papel;
+    user.tipo_usuario = userData.tipo_usuario || user.tipo_usuario;
     user.cidade = userData.cidade || user.cidade;
     user.cursosFavoritos = userData.cursosFavoritos || user.cursosFavoritos;
 
@@ -101,7 +104,7 @@ const user = {
         const input = document.getElementById(field + "Input");
         const display = document.getElementById(field + "Display");
         const newValue = input.value.trim() || user[field];
-        user[field === "role" ? "papel" : field === "location" ? "cidade" : field] = newValue;
+        user[field === "role" ? "tipo_usuario" : field === "location" ? "cidade" : field] = newValue;
         display.textContent = newValue;
         input.style.display = "none";
         display.style.display = "inline";
@@ -143,4 +146,3 @@ const user = {
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('expanded');
   });
-

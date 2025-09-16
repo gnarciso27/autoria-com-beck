@@ -88,6 +88,28 @@ body {
   text-decoration: underline;
 }
 
+.radio-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  accent-color: #a678e2; /* cor personalizada do botão */
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;
