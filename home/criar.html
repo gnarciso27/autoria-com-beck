@@ -8,6 +8,42 @@
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/cursosCSS/cursos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <style>
+  .formi {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #f7f7f7;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  .curso-form label {
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+  }
+  .curso-form input[type="text"],
+  .curso-form textarea,
+  .curso-form input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  .curso-form button {
+    margin-top: 20px;
+    background-color: #6f42c1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .curso-form button:hover {
+    background-color: #563d7c;
+  }
+</style>
 </head>
 <body>
    <!-- MENU SUPERIOR -->
@@ -29,38 +65,53 @@
     <div class="formi">
 
       <h2>Criar Novo Curso</h2>
-      <form id="cursoForm">
+      <form id="cursoForm" enctype="multipart/form-data" class="curso-form">
         <label for="nome">Nome do Curso:</label><br>
-        <input type="text" id="nome" name="nome" required><br><br>
+        <input type="text" id="nome" name="nome" placeholder="Digite o nome do curso" required>
         
         <label for="descricao">Descrição:</label><br>
-        <textarea id="descricao" name="descricao" required></textarea><br><br>
+        <textarea id="descricao" name="descricao" placeholder="Digite a descrição do curso" required></textarea>
+
+        <label for="imagem">Imagem do Curso:</label>
+        <input type="file" id="imagem" name="imagem" accept="image/*" required>
+
         
-        
-        
-        <button type="submit">Salvar Curso</button>
+        <button type="submit" class="btn btn-roxo">Salvar Curso</button>
       </form>
     </div>
 
   <script>
     document.getElementById('cursoForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Você precisa estar logado!');
+        return;
+      }
 
-      const nome = document.getElementById('nome').value;
+      const titulo = document.getElementById('nome').value;
       const descricao = document.getElementById('descricao').value;
-      
+      const imagem = document.getElementById('imagem').files[0];
 
+      const formData = new FormData();
+      formData.append('titulo', titulo);
+      formData.append('descricao', descricao);
+      formData.append('imagem', imagem);
+      
       const res = await fetch('http://localhost:3000/api/cursos', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, descricao})
+        headers: { 
+          'Authorization': `Bearer ${token}`
+         },
+        body: formData
       });
 
       if (res.ok) {
         alert('Curso criado com sucesso!');
         window.location.href = 'index.html';
       } else {
-        alert('Erro ao criar curso');
+        const data = await res.json();
+        alert('Erro ao criar curso: ' + (data.erro || 'Erro desconhecido'));
       }
     });
   </script>
