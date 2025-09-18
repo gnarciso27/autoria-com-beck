@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, '..', 'cadastro')));
 app.use(express.static(path.join(__dirname, '..', 'login')));
 app.use(express.static(path.join(__dirname, '..', 'perfil')));
 app.use(express.static(path.join(__dirname, '..', 'home')));
+app.use(express.static(path.join(__dirname, '..', 'sobre')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /////////// Verificar se é professor
