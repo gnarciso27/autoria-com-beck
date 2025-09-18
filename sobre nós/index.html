@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sobre Nós - Ensino de Chinelo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-purple-200 to-purple-300 min-h-screen flex">
+
+  <!-- MENU SUPERIOR -->
+  <header class="fixed top-0 left-0 right-0 h-14 bg-purple-600 text-white flex items-center justify-between px-6 shadow-lg z-50">
+    <div class="font-bold text-xl">Ensino de Chinelo</div>
+    <div>
+      <a href="/login.html" class="bg-white text-purple-600 px-4 py-1 rounded-lg font-semibold hover:bg-purple-100 transition">
+        Entrar
+      </a>
+    </div>
+  </header>
+
+  <!-- MENU LATERAL -->
+  <div class="flex">
+    <div id="sidebar" class="fixed top-14 left-0 h-full w-16 bg-purple-600 text-white flex flex-col items-center py-6 space-y-6 transition-all duration-300 overflow-hidden">
+      <a href="/index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-700 transition w-full">
+        <i class="fas fa-home"></i><span class="hidden">Início</span>
+      </a>
+      <a href="perfil.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-700 transition w-full">
+        <i class="fas fa-user"></i><span class="hidden">Perfil</span>
+      </a>
+      <a href="config.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-700 transition w-full">
+        <i class="fas fa-cog"></i><span class="hidden">Configurações</span>
+      </a>
+      <a href="sobre.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-700 transition w-full">
+        <i class="fas fa-info-circle"></i><span class="hidden">Sobre nós</span>
+      </a>
+    </div>
+
+    <!-- Botão Toggle -->
+    <button id="toggleBtn" class="fixed top-16 left-20 bg-white text-purple-600 shadow-md px-3 py-1 rounded-md text-lg transition">
+      ☰
+    </button>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <main class="flex-1 ml-20 mt-20 p-6 w-full">
+    <div class="max-w-5xl mx-auto p-8 space-y-12 bg-white rounded-2xl shadow-lg">
+      <!-- Quem Somos -->
+      <section>
+        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+          <i class="fas fa-bullseye text-purple-600"></i> Quem Somos
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Somos alunos do prf Daniel em info 3v no IFRN e acreditamos na educação acessível e transformadora.  
+          Nosso objetivo é proporcionar conhecimento de forma prática, alem de passar de ano, é claro.   
+          
+        </p>
+      </section>
+
+      <!-- O que fazemos -->
+      <section>
+        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+          <i class="fas fa-hands-helping text-purple-600"></i> O que fazemos
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Oferecemos cursos e conteúdos de alta qualidade, com foco em simplicidade e clareza.  
+          Evitamos aulas  complicadas para garantir que todos possam aprender o necessário sem dificuldades.
+        </p>
+      </section>
+
+      <!-- Nossa História -->
+      <section>
+        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+          <i class="fas fa-book-open text-purple-600"></i> Nossa História
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          Tudo começou com um grupo de amigos apelidados de chineleiros pelo prof henrrique Coelho, e insetivados por Daniel Aguiar
+          Daí nasceu o <strong>Ensino de Chinelo</strong>.
+        </p>
+      </section>
+
+      <!-- Nossa Equipe -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <i class="fas fa-users text-purple-600"></i> Nossa Equipe
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Membro 1 -->
+          <div class="bg-gray-50 rounded-xl p-6 shadow-md text-center">
+            <img src="img/WhatsApp Image 2025-09-17 at 21.24.48.jpeg" alt="Foto membro" class="w-24 h-24 mx-auto rounded-full mb-4 border-4 border-purple-500 object-cover">
+            <h3 class="text-lg font-bold">Afonso Torres </h3>
+            <p class="text-sm text-gray-600">Fundador & CEO</p>
+            <p class="mt-2 text-sm">“Sempre acreditando que aprender também pode ser divertido.”</p>
+            <div class="mt-3">
+              <a href="https://linkedin.com" target="_blank" class="text-blue-600 hover:text-blue-800"><i class="fab fa-linkedin fa-lg"></i></a>
+            </div>
+          </div>
+
+          <!-- Membro 2 -->
+          <div class="bg-gray-50 rounded-xl p-6 shadow-md text-center">
+            <img src="img/WhatsApp Image 2025-09-17 at 21.24.40.jpeg" alt="Foto membro" class="w-24 h-24 mx-auto rounded-full mb-4 border-4 border-purple-500 object-cover">
+            <h3 class="text-lg font-bold">G.Narciso</h3>
+            <p class="text-sm text-gray-600">sócio colaborador</p>
+            <p class="mt-2 text-sm">“Transformo ideias em experiências de aprendizado.”</p>
+            <div class="mt-3">
+              <a href="https://linkedin.com" target="_blank" class="text-blue-600 hover:text-blue-800"><i class="fab fa-linkedin fa-lg"></i></a>
+            </div>
+          </div>
+
+          <!-- Membro 3 -->
+          <div class="bg-gray-50 rounded-xl p-6 shadow-md text-center">
+            <img src="img/WhatsApp Image 2025-09-17 at 21.25.16.jpeg" alt="Foto membro" class="w-24 h-24 mx-auto rounded-full mb-4 border-4 border-purple-500 object-cover">
+            <h3 class="text-lg font-bold">Davi Pereira</h3>
+            <p class="text-sm text-gray-600">Desenvolvedor front end</p>
+            <p class="mt-2 text-sm">“Código simples é código fuderoso.”</p>
+            <div class="mt-3">
+              <a href="https://linkedin.com" target="_blank" class="text-blue-600 hover:text-blue-800"><i class="fab fa-linkedin fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Script para expandir/contrair sidebar
+    const sidebar = document.getElementById("sidebar");
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    toggleBtn.addEventListener("click", () => {
+      if (sidebar.classList.contains("w-16")) {
+        sidebar.classList.remove("w-16");
+        sidebar.classList.add("w-56");
+        sidebar.querySelectorAll("span").forEach(el => el.classList.remove("hidden"));
+        toggleBtn.style.left = "230px";
+      } else {
+        sidebar.classList.remove("w-56");
+        sidebar.classList.add("w-16");
+        sidebar.querySelectorAll("span").forEach(el => el.classList.add("hidden"));
+        toggleBtn.style.left = "80px";
+      }
+    });
+  </script>
+</body>
+</html>
+

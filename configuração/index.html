@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - Ensino de Chinelo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+
+  <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+    <h2 class="text-2xl font-bold flex items-center justify-center gap-2 mb-6">
+      <i class="fas fa-cog"></i> Configurações
+    </h2>
+
+    <form id="config-form" class="space-y-6">
+      <!-- Informações Pessoais -->
+      <div>
+        <h4 class="text-lg font-semibold mb-3">Informações Pessoais</h4>
+        <div class="mb-3">
+          <label for="nome" class="block text-sm font-medium mb-1">Nome</label>
+          <input type="text" id="nome" name="nome" required
+            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 p-2 bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="block text-sm font-medium mb-1">E-mail</label>
+          <input type="email" id="email" name="email" required
+            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 p-2 bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label for="senha" class="block text-sm font-medium mb-1">Senha</label>
+          <input type="password" id="senha" name="senha"
+            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 p-2 bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <!-- Preferências de Tema -->
+      <div>
+        <h4 class="text-lg font-semibold mb-3">Tema</h4>
+        <select id="tema" name="tema"
+          class="w-full rounded-lg border border-gray-300 dark:border-gray-600 p-2 bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500">
+          <option value="auto">Automático (Sistema)</option>
+          <option value="light">Claro</option>
+          <option value="dark">Escuro</option>
+        </select>
+      </div>
+
+      <!-- Botão Salvar -->
+      <div>
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition">
+          Salvar Alterações
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
+  <script>
+    // Função para aplicar o tema
+    function aplicarTema(tema) {
+      if (tema === 'auto') {
+        const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', preferDark);
+      } else {
+        document.documentElement.classList.toggle('dark', tema === 'dark');
+      }
+    }
+
+    // Carregar configurações salvas
+    window.addEventListener('DOMContentLoaded', () => {
+      const config = JSON.parse(localStorage.getItem('config')) || {};
+
+      if (config.nome) document.getElementById('nome').value = config.nome;
+      if (config.email) document.getElementById('email').value = config.email;
+      if (config.tema) document.getElementById('tema').value = config.tema;
+
+      aplicarTema(config.tema || 'auto');
+    });
+
+    // Salvar configurações
+    document.getElementById('config-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const tema = document.getElementById('tema').value;
+
+      const config = { nome, email, senha, tema };
+      localStorage.setItem('config', JSON.stringify(config));
+
+      aplicarTema(tema);
+      alert('Configurações salvas com sucesso!');
+    });
+  </script>
+</body>
+</html>
