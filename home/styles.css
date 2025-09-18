@@ -6,7 +6,7 @@
 
 body {
   font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #cbb4e3, #e1c5ff);
+  background: linear-gradient(135deg, #E9D5FF, #D8B4FE);
   overflow-x: hidden;
 }
 
@@ -16,7 +16,7 @@ body {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #a678e2;
+  background-color: #9333EA;
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -55,7 +55,7 @@ body {
   width: 60px;
   transition: width 0.3s;
   height: 100vh;
-  background-color: #a678e2;
+  background-color: #9333EA;
   position: fixed;
   top: 60px;
   left: 0;
@@ -110,6 +110,7 @@ body {
   padding: 5px 10px;
   cursor: pointer;
   transition: left 0.3s;
+  color: #9333EA
 }
 
 .sidebar.expanded ~ .toggle-btn {
